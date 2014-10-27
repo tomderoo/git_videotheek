@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Videotheek - Login</title>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Changa+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/videotheek.css">
+    </head>
+
+    <body>
+        <div id="bgimg"></div>
+        
+        <div id="wrapper">
+
+            <header>
+                <h1>REELTIME<span>HomeCinema</span></h1>
+            </header>
+
+            <article>
+                <h3>Aanmelden</h3>
+                {% if errormessage != null %}
+                    <p id="errormessage">{{ errormessage }}</p>
+                {% endif %}
+                {% if info != null %}
+                    <p id="infomessage">{{ info }}</p>
+                {% endif %}
+                <p>Geregistreerde gebruikers melden zich hier aan met gebruikersnaam en paswoord.</p>
+                <form action="process.php" method="post">
+                    <input type="hidden" name="act" value="login">
+                    <input type="text" size="20" placeholder="gebruikersnaam" name="naam" {% if passmessage != null %}value="{{ passmessage.user }}" {% endif %}required>
+                    <input type="password" size="20" maxlength="10" placeholder="paswoord" name="paswoord" required>
+                    <input type="submit" value="Aanmelden">
+                </form>
+            </article>
+
+            {% include 'scripttimer.twig' %}
+        </div>
+        
+    </body>
+</html>
+
+

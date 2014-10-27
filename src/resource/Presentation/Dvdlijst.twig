@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Videotheek - Management</title>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Changa+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/videotheek.css">
+        <link rel="stylesheet" type="text/css" href="DataTables/media/css/jquery.dataTables.css">
+        <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dvdlijst.js"></script>
+    </head>
+
+    <body>
+        <div id="bgimg"></div>
+        
+        <div id="wrapper">
+
+            <header>
+                <h1>REELTIME<span>HomeCinema</span></h1>
+                <ul class="topmenu">
+                    <li><a href="videotheek.php">Hoofdscherm</a></li>
+                    <li><a href="filmlijst.php">Filmlijst</a></li>
+                    <li><a href="dvdlijst.php">DVD-lijst</a></li>
+                    <li><a class="logout" href="process.php?act=logout">Uitloggen</a></li>
+                </ul>
+            </header>
+
+            <article class="full">
+                <h3>DVD-exemplaren</h3>
+                {% if errormessage != null %}
+                    <p id="errormessage">
+                        {{ errormessage }}
+                    <p>
+                {% endif %}
+                {% if info != null %}
+                    <p id="infomessage">
+                        {{ info }}
+                    <p>
+                {% endif %}
+                <form action="process.php" method="post">
+                    <p{% if selectid != null %} style="background-color: #ffc"{% endif %}>Nieuw DVD-exemplaar:
+                    <input type="hidden" name="act" value="nieuwedvd">
+                    <select name="filmid" size="1">
+                        {% if filmlijst != null %}
+                            {% for film in filmlijst %}
+                                <option value="{{ film.id }}"{% if selectid == film.id %} selected{% endif%}>{{ film.titel }} ({{ film.imdb }})</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <input type="number" placeholder="nummer" id="nummer" name="nummer" value="{{ vrijenummer }}" required{% if selectid != null %} autofocus{% endif %}>
+                    <label for="nummer"><img src="img/info.png" alt="Nummersuggestie = het eerste vrije nummer in de database)" title="Nummersuggestie = het eerste vrije nummer in de database"></label>
+                    <input type="submit" value="Invoeren">
+                    </p>
+                </form>
+                <hr class="zoekbalk">
+                <form class="zoekbalk" action="process.php" method="post">
+                    <p>Zoek DVD-exemplaar op nummer: 
+                    <input type="hidden" name="act" value="zoekdvd">
+                    <input type="number" placeholder="nummer" name="id" required>
+                    <input type="submit" value="Zoek">
+                    </p>
+                </form>
+                {% if dvdlijst != null %}
+                <hr>
+                <table id="dvdlijst" class="dvdlijst">
+                    <thead>
+                        <tr>
+                            <td>Nummer</td>
+                            <td>Titel</td>
+                            <td>Acties</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set thisdvd = [] %}
+                        {% for dvd in dvdlijst %}
+                            <tr>
+                                <td>{{ dvd.id }}</td>
+                                <td>{{ dvd.titel }}</td>
+                                <td style="min-width: 90px">
+                                    <div class="retourdiv" style="display: inline-block; width: 26px;">
+                                    {# if dvd.leenstatus == 0 #}
+                                        <form class="retour" style="display: {% if dvd.leenstatus == 0 %}block;{% else %}none;{% endif %}" action="process.php" method="post">
+                                            <input type="hidden" name="act" value="retour">
+                                            <input type="hidden" name="id" value="{{ dvd.id }}">
+                                            {% if dvdlijst|length == 1 %}
+                                                <input type="hidden" name="single" value="{{ dvd.id }}">
+                                            {% endif %}
+                                            <input type="image" src="img/greenarrow.png" alt="Retour ex. {{ dvd.id }} van '{{ dvd.titel }}'" title="Retour ex. {{ dvd.id }} van '{{ dvd.titel }}'">
+                                        </form>
+                                    {# else #}
+                                        <!--&nbsp;-->
+                                    {# endif #}
+                                    </div>
+                                    <div class="leendiv" style="display: inline-block; width: 26px;">
+                                    {# if dvd.leenstatus == 1 #}
+                                        <form class="leen" style="display: {% if dvd.leenstatus == 1 %}block;{% else %}none;{% endif %}" action="process.php" method="post">
+                                            <input type="hidden" name="act" value="leen">
+                                            <input type="hidden" name="id" value="{{ dvd.id }}">
+                                            {% if dvdlijst|length == 1 %}
+                                                <input type="hidden" name="single" value="{{ dvd.id }}">
+                                            {% endif %}
+                                            <input type="image" src="img/redarrow.png" alt="Ontleen ex. {{ dvd.id }} van '{{ dvd.titel }}'" title="Ontleen ex. {{ dvd.id }} van '{{ dvd.titel }}'">
+                                        </form>
+                                    {# else #}
+                                        <!--&nbsp;-->
+                                    {# endif #}
+                                    </div>
+                                    <div style="display: inline-block; width: 26px;">
+                                    <form class="kill" action="process.php" method="post">
+                                        <input type="hidden" name="act" value="kill">
+                                        <input type="hidden" name="id" value="{{ dvd.id }}">
+                                        <input type="image" src="img/trashicon.png" alt="Verwijder ex. {{ dvd.id }} van '{{ dvd.titel }}'" title="Verwijder ex. {{ dvd.id }} van '{{ dvd.titel }}'">
+                                    </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% set thisdvd = dvd %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </article>
+            
+            {% if popup == 1 %}
+            <div id="overlay">
+            </div>
+            <div id="transparentscreen">
+                <div id="bevestigscherm">
+                    <p>Bent u zeker dat u het volgende DVD-exemplaar wil verwijderen? (De filmtitel zelf wordt niet verwijderd.)<br><br><b>nr. {{ thisdvd.id }}, '{{ thisdvd.titel }}'</b></p>
+                    <div id="knoppen">
+                        <form action="process.php" method="post">
+                            <input type="hidden" name="act" value="kill">
+                            <input type="hidden" name="confirm" value="1">
+                            <input type="hidden" name="id" value="{{ thisdvd.id }}">
+                            <input type="submit" class="left" value="Verwijderen">
+                        </form>
+                        <form action="dvdlijst.php" method="post">
+                            <input type="submit" class="right" value="Terug">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% include 'scripttimer.twig' %}
+        </div>
+        
+    </body>
+</html>
+
+

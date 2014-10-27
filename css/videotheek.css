@@ -1,0 +1,344 @@
+body {
+    font-size: 20px;
+    font-family: 'Noto Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+div#bgimg {
+    height: 100vh;
+    width: 100vw;
+    background: url('../img/imdbtop.jpg') no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -999;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+div#wrapper {
+    width: 80vw;
+    min-width: 900px;
+    box-sizing: border-box;
+    padding: 1em;
+    margin: 1em auto;
+    border-radius: 2em;
+    border: 0.25em solid whitesmoke;
+    box-shadow: black 0.1em 0.1em 1.5em;
+    background-color: white;
+    overflow: auto;
+}
+
+article.full {
+    clear: both;
+    width: 100%;
+}
+
+article.half {
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    padding-right: 1em;
+}
+
+header h1 {
+    color: white;
+    margin: -20px -20px 0 -20px;
+    padding: 20px 20px 15px;
+    letter-spacing: 0.1em;
+    font-family: 'Changa One', sans-serif;
+    font-size: 3em;
+    background: #666666; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  #666666 0%, #000000 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#666666), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg,  #666666 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg,  #666666 0%,#000000 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg,  #666666 0%,#000000 100%); /* IE10+ */
+    background: linear-gradient(45deg,  #666666 0%,#000000 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+header h1 span {
+    font-style: italic;
+    font-size: 0.75em;
+    letter-spacing: 0em;
+    color: #e9e9e0;
+}
+header ul.topmenu {
+    box-sizing: border-box;
+    list-style: none;
+    overflow: auto;
+    line-height: 2em;
+    background-color: grey;
+    margin: 0 -1em 0 -1em;
+    padding: 0.5em 1em 0.5em;
+    background: #333333; /* Old browsers */
+    background: -moz-linear-gradient(top,  #333333 0%, #aaaaaa 15%, #444444 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(15%,#aaaaaa), color-stop(100%,#444444)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #333333 0%,#aaaaaa 15%,#444444 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #333333 0%,#aaaaaa 15%,#444444 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #333333 0%,#aaaaaa 15%,#444444 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #333333 0%,#aaaaaa 15%,#444444 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#444444',GradientType=0 ); /* IE6-9 */
+}
+
+header ul.topmenu li {
+    box-sizing: border-box;
+    display: inline-block;
+    float: left;
+}
+
+header ul.topmenu li:last-child {
+    float: right;
+    margin-right: 0;
+}
+
+header ul.topmenu li a {
+    display: block;
+    text-decoration: none;
+    padding: 0 0.5em;
+    font-size: 0.8em;
+    line-height: 1.6em;
+    background-color: #ddd;
+    border-radius: 0.5em;
+    margin-right: 0.5em;
+    color: black;
+}
+
+header ul.topmenu a.logout {
+    background-color: #ddb;
+}
+
+header ul.topmenu li a:hover, header ul.topmenu li a:active {
+    background-color: #f9f9f9;
+}
+
+header ul.topmenu a.logout:hover,  header ul.topmenu a.logout:active{
+    background-color: #f9f9e9;
+}
+
+h3 {
+    margin: 0.5em 0 0.5em;
+}
+
+a:link, a:visited {
+    color: #333;
+}
+
+a:hover, a:active {
+    color: #776;
+}
+
+.floatleft {
+    display: inline-block;
+    float: left;
+}
+
+table.filmlijst, table.dvdlijst {
+    border: 1px solid black;
+    width: inherit;
+    font-size: 1em;
+}
+
+table.filmlijst thead, table.dvdlijst thead {
+    color: white;
+    background-color: darkgrey;
+    font-size: 0.75em;
+    background: #aaaaaa; /* Old browsers */
+    background: -moz-linear-gradient(top,  #aaaaaa 15%, #444444 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(15%,#aaaaaa), color-stop(100%,#444444)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #aaaaaa 15%,#444444 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #aaaaaa 15%,#444444 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #aaaaaa 15%,#444444 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #aaaaaa 15%,#444444 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aaaaaa', endColorstr='#444444',GradientType=0 ); /* IE6-9 */
+}
+
+table.filmlijst thead td, table.dvdlijst thead td {
+    padding: 0.2em;
+}
+
+table.filmlijst tr td:nth-child(1) {
+    width: 75%;
+}
+
+table.dvdlijst tr td:nth-child(2) {
+    width: 80%;
+}
+
+table.dvdlijst thead tr td:nth-child(1), table.dvdlijst thead tr td:nth-child(3) {
+    text-align: center;
+}
+table.dvdlijst tr td:nth-child(1) {
+    width: 11%;
+    text-align: right;
+}
+
+table.dvdlijst tr td:nth-child(3), table.dvdlijst tr td:nth-child(4), table.dvdlijst tr td:nth-child(5) {
+    width: 3%;
+}
+
+table.filmlijst tr td:nth-child(2) {
+    width: 15%;
+}
+
+table.filmlijst tr td:nth-child(3), table.filmlijst tr td:nth-child(4) {
+    width: 5%;
+    text-align: center;
+}
+table.dvd tr td:nth-child(1) {
+    max-width: 2%;
+    text-align: left;
+}
+
+table.filmlijst tbody tr td:nth-child(4), table.filmlijst tr td:nth-child(5) {
+    width: 2.5%;
+    text-align: center;
+}
+
+table.filmlijst tbody {
+    font-size: 0.9em;
+}
+
+table.filmlijst tbody tr:nth-child(even), table.dvdlijst tbody tr:nth-child(even) {
+    background-color: #edece9;
+}
+table.filmlijst tbody tr td, table.dvdlijst tbody tr td {
+    vertical-align: middle;
+    line-height: 1em;
+    padding: 0.25em;
+}
+td.nummerlink a.in {
+    color: #060;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #060;
+    padding: 0.05em 0.2em;
+    box-sizing: border-box;
+    display:inline-block;
+    margin: 0.1em 0;
+}
+
+td.nummerlink a.in:hover, td.nummerlink a.in:active {
+    background-color: #dfd;
+}
+
+td.nummerlink a.out {
+    color: #c00;
+    text-decoration: none;
+    border: 1px solid #c00;
+    padding: 0.05em 0.2em;
+    opacity: 0.5;
+    box-sizing: border-box;
+    display:inline-block;
+    margin: 0.1em 0;
+}
+
+td.nummerlink a.out:hover, td.nummerlink a.out:active {
+    background-color: #fdd;
+    opacity: 1;
+}
+
+p#errormessage {
+    border: 1px solid #c00;
+    color: #c00;
+    background-color: #fdd;
+    padding: 0.5em;
+    text-align: center;
+}
+
+p#infomessage {
+    border: 1px #05a solid;
+    color: #05a;
+    background-color: #cde;
+    padding: 0.5em;
+    text-align: center;
+}
+
+hr, p {
+    margin: 0.25em 0;
+}
+
+hr {
+    height: 1px;
+    background-color: black;
+    border: none;
+}
+div#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 998;
+}
+
+div#transparentscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    opacity: 1;
+    text-align: center;
+    z-index: 999;
+}
+
+div#bevestigscherm {
+    box-sizing: border-box;
+    box-shadow: black 2px 2px 20px;
+    border-radius: 1em;
+    border: 0.25em solid whitesmoke;
+    width: 50vw;
+    margin: auto;
+    margin-top: 25vh;
+    background-color: white;
+    z-index: 1000;
+    position: relative;
+    overflow: auto;
+}
+
+div#bevestigscherm p {
+    padding: 1em;
+}
+div#knoppen form {
+    box-sizing: border-box;
+    width: 50%;
+    height: 2em;
+    float: left;
+}
+div#knoppen form input[type=submit] {
+    box-sizing: border-box;
+    width:100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    border:none;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+div#knoppen form input[type=submit].left {
+    background-color: #ada;
+    color:#060;
+    border-radius: 0 0 0 1em;
+}    
+div#knoppen form input[type=submit].left:hover {
+    background-color: #cec;
+}
+div#knoppen form input[type=submit].right {
+    background-color: #fea;
+    color: #984;
+    border-radius: 0 0 1em 0;
+}    
+div#knoppen form input[type=submit].right:hover {
+    background-color: #ffc;
+    
+}
+.clear {
+    clear: both;
+}

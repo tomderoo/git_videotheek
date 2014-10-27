@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Videotheek - Management</title>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Changa+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/videotheek.css">
+        <link rel="stylesheet" type="text/css" href="DataTables/media/css/jquery.dataTables.css">
+        <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/filmlijst.js"></script>
+    </head>
+
+    <body>
+        <div id="bgimg"></div>
+        
+        <div id="wrapper">
+
+            <header>
+                <h1>REELTIME<span>HomeCinema</span></h1>
+                <ul class="topmenu">
+                    <li><a href="videotheek.php">Hoofdscherm</a></li>
+                    <li><a href="filmlijst.php">Filmlijst</a></li>
+                    <li><a href="dvdlijst.php">DVD-lijst</a></li>
+                    <li><a class="logout" href="process.php?act=logout">Uitloggen</a></li>
+                </ul>
+            </header>
+
+            <article class="full">
+                <h3>Films</h3>
+                {% if errormessage != null %}
+                    <p id="errormessage">
+                        {{ errormessage }}
+                    <p>
+                {% endif %}
+                {% if info != null %}
+                    <p id="infomessage">
+                        {{ info }}
+                    <p>
+                {% endif %}
+                <form action="process.php" method="post">
+                    <p>Nieuwe filmtitel:
+                    <input type="hidden" name="act" value="nieuwetitel">
+                    <input type="text" size="50" maxlength="100" placeholder="titel" id="film" name="film" required>
+                    <label for="film"><img src="img/info.png" alt="Titel van de film, met Angelsaksische capitalisatie" title="Titel van de film, met Angelsaksische capitalisatie"></label>
+                    <input type="text" size="10" maxlength="10" placeholder="IMDB-code" id="imdb" name="imdb" required>
+                    <label for="imdb"><img src="img/info.png" alt="Unieke IMDB code, zie http://www.imdb.com" title="Unieke IMDB code, zie http://www.imdb.com"></label>
+                    <input type="submit" value="Invoeren">
+                    </p>
+                </form>
+                <hr class="zoekbalk">
+                <p class="zoekbalk floatleft">Zoek film:&nbsp;</p>
+                <form class="zoekbalk" action="process.php" method="post">
+                    <p class="floatleft">
+                        <input type="hidden" name="act" value="zoekfilm">
+                        <input type="number" placeholder="op nummer" name="nummer" required>
+                        <input type="submit" value="Zoek">
+                    </p>
+                </form>
+                <form class="zoekbalk" action="process.php" method="post">
+                    <p class="floatleft">&nbsp;|
+                        <input type="hidden" name="act" value="zoektitel">
+                        <input type="search" size="20" placeholder="op titel" name="titel" autocomplete="off" required>
+                        <input type="submit" value="Zoek">
+                    </p>
+                </form>
+                {% if filmlijst != null %}
+                <hr class="clear">
+                    <table id="filmlijst" class="filmlijst">
+                        <thead>
+                            <tr>
+                                <td>Titel</td>
+                                <td>Nummers</td>
+                                <td>Aanwezig</td>
+                                <td>Acties</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set thisfilm = [] %}
+                            {% for film in filmlijst %}
+                                <tr>
+                                    <td><a class="imdblink" id="{{ film.imdb }}" href="http://www.imdb.com/title/{{ film.imdb }}"><img src="img/imdbicon.png" alt="'{{ film.titel }}' IMDB-informatie" title="'{{ film.titel }}' IMDB-informatie"></a> {{ film.titel }}</td>
+                                    <td class="nummerlink">
+                                        {% set aanwezig = 0 %}
+                                        {% if film.dvd != null %}
+                                            {% for dvd in film.dvd %}
+                                                {% if dvd.leenstatus == 1 %}
+                                                    <a class="in" href="process.php?act=zoekdvd&amp;id={{ dvd.id }}">{{ dvd.id }}</a>
+                                                    {% set aanwezig = aanwezig + 1 %}
+                                                {% else %}
+                                                    <a class="out" href="process.php?act=zoekdvd&amp;id={{ dvd.id }}">{{ dvd.id }}</a>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            - - -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ aanwezig }}</td>
+                                    <td>
+                                        <form style="display: inline-block" action="process.php" method="post">
+                                            <input type="hidden" name="act" value="focusdvd">
+                                            <input type="hidden" name="selectid" value="{{ film.id }}">
+                                            <input type="image" src="img/buttonadd.png" alt="Voeg DVD-exemplaar toe voor '{{ film.titel }}'" title="Voeg DVD-exemplaar toe voor '{{ film.titel }}'">
+                                        </form>
+                                        <form style="display: inline-block" action="process.php" method="post">
+                                            <input type="hidden" name="act" value="deletefilm">
+                                            <input type="hidden" name="filmid" value="{{ film.id }}">
+                                            <input type="image" src="img/trashicon.png" alt="Verwijder '{{ film.titel }}'" title="Verwijder '{{ film.titel }}'">
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% set thisfilm = film %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </article>
+            
+            {% if popup == 1 %}
+            <div id="overlay">
+            </div>
+            <div id="transparentscreen">
+                <div id="bevestigscherm">
+                    <p>Bent u zeker dat u de volgende film wil verwijderen? (Bijhorende DVD-exemplaren worden mee verwijderd.)<br><br><b>'{{ thisfilm.titel }}'</b></p>
+                    <div id="knoppen">
+                        <form action="process.php" method="post">
+                            <input type="hidden" name="act" value="deletefilm">
+                            <input type="hidden" name="confirm" value="1">
+                            <input type="hidden" name="filmid" value="{{ thisfilm.id }}">
+                            <input type="submit" class="left" value="Verwijderen">
+                        </form>
+                        <form action="filmlijst.php" method="post">
+                            <input type="submit" class="right" value="Terug">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% include 'scripttimer.twig' %}
+        </div>
+
+    </body>
+</html>
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <title>Videotheek - Management</title>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Changa+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/videotheek.css">
+    </head>
+
+    <body>
+        
+        <div id="bgimg"></div>
+        
+        <div id="wrapper">
+
+            <header>
+                <h1>REELTIME<span>HomeCinema</span></h1>
+                <ul class="topmenu">
+                    <li><a href="videotheek.php">Hoofdscherm</a></li>
+                    <li><a href="filmlijst.php">Filmlijst</a></li>
+                    <li><a href="dvdlijst.php">DVD-lijst</a></li>
+                    <li><a class="logout" href="process.php?act=logout">Uitloggen</a></li>
+                </ul>
+            </header>
+
+            <article class="clear half">
+                <h3><a href="filmlijst.php">Films</a></h3>
+                <ul>
+                    <li>Zoek een film op DVD-nummer</li>
+                    <li>Nieuwe filmtitel invoeren</li>
+                    <li>Filmtitel verwijderen</li>
+                </ul>
+                <hr>
+                <h3><a href="dvdlijst.php">DVD-exemplaren</a></h3>
+                <ul>
+                    <li>Zoek DVD-exemplaar op nummer</li>
+                    <li>Nieuw DVD-exemplaar toevoegen</li>
+                    <li>DVD-exemplaar verwijderen</li>
+                    <li>Film ontlenen</li>
+                    <li>Film retourneren</li>
+                </ul>
+            </article>
+            
+            <article class="half">
+                <h3>Gebruikersgegevens</h3>
+                <p>Ingelogd als: <b>{{ gebruiker }}</b></p>
+                <hr>
+                <h3>Nieuw / update personeel</h3>
+                {% if errormessage != null %}
+                    <p id="errormessage">{{ errormessage }}</p>
+                {% endif %}
+                {% if info != null %}
+                    <p id="infomessage">{{ info }}</p>
+                {% endif %}
+                <p>Voer een nieuwe gebruikersnaam en een nieuw paswoord in, of vul een bestaande gebruikersnaam met een nieuw paswoord in.</p>
+                <form action="process.php" method="post">
+                    <input type="hidden" name="act" value="newuser">
+                    <input type="text" size="20" placeholder="gebruikersnaam" name="naam" required><br>
+                    <input type="password" size="20" maxlength="10" placeholder="paswoord" name="paswoord" required><br>
+                    <input type="submit" value="Uitvoeren">
+                </form>
+            </article>
+            
+            {% include 'scripttimer.twig' %}
+        </div>
+        
+    </body>
+</html>
+
+
